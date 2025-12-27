@@ -111,6 +111,10 @@ async def get_messages_endpoint(
         
         total_pages = (total + page_size - 1) // page_size if total > 0 else 0
         
+        for msg in messages:
+            if "timestamp" in msg and isinstance(msg["timestamp"], str):
+                msg["timestamp"] = msg["timestamp"][:10]
+
         message_responses = [
             MessageResponse(**msg) for msg in messages
         ]
@@ -118,7 +122,9 @@ async def get_messages_endpoint(
         duration = time.time() - start_time
         http_request_duration_seconds.labels(method="GET", endpoint="/messages").observe(duration)
         http_requests_total.labels(method="GET", endpoint="/messages", status="200").inc()
+
         
+            
         return MessageListResponse(
             messages=message_responses,
             total=total,
