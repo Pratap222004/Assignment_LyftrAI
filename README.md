@@ -243,13 +243,10 @@ http_requests_total{endpoint="/webhook",method="POST",status="201"} 10.0
 - **Request Logging**: Includes method, path, status code, duration, and client IP
 
 ### Prometheus Metrics
+- Exposes `/metrics` endpoint compatible with Prometheus
+- Tracks HTTP request counts and durations
+- Tracks webhook message ingestion statistics
 
-- **Why**: Standard monitoring format compatible with Prometheus/Grafana
-- **Metrics**:
-  - `http_requests_total`: Counter of HTTP requests by method, endpoint, status
-  - `http_request_duration_seconds`: Histogram of request durations
-  - `webhook_messages_total`: Counter of webhook messages by source and status
-  - `messages_in_db`: Gauge of total messages in database
 
 ### SQLite Database
 
@@ -289,37 +286,8 @@ curl http://localhost:8000/messages?source=test_source
 # Filter by date range
 curl "http://localhost:8000/messages?start_date=2024-01-01T00:00:00Z&end_date=2024-01-31T23:59:59Z"
 ```
-
-## Development
-
-### Local Development (without Docker)
-
-1. **Install dependencies**:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-2. **Set environment variables**:
-   ```bash
-   export WEBHOOK_SECRET=your_secret_key
-   ```
-
-3. **Run the application**:
-   ```bash
-   uvicorn app.main:app --reload
-   ```
-
-4. **Run tests**:
-   ```bash
-   pytest tests/ -v
-   ```
-
-## Tools Used
-
-- **Cursor**: Primary IDE for code development and project structure
-- **ChatGPT**: Used for code review, design decisions, and ensuring best practices
-
 ## License
 
 This is an assignment project for Lyftr AI.
+
 
